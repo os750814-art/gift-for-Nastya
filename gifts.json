@@ -1,0 +1,44 @@
+[
+  {
+    "id": "flowers",
+    "name": "Букет",
+    "price": 30,
+    "image": "images/flowers.jpg",
+    "desc": "Красивый букет для тебя"
+  },
+  {
+    "id": "strawberry_choco",
+    "name": "Клубника в шоколаде",
+    "price": 20,
+    "image": "images/strawberry_choco.jpg",
+    "desc": "Сладкая классика, которая всегда в тему"
+  },
+  {
+    "id": "ticket_babes",
+    "name": "Билет Сквозь Баб",
+    "price": 58,
+    "image": "images/ticket_babes.jpg",
+    "desc": "Вечер с вайбом 😏"
+  },
+  {
+    "id": "bag",
+    "name": "Сумочка",
+    "price": 10,
+    "image": "images/bag.jpg",
+    "desc": "Маленькая, стильная, удобная"
+  },
+  {
+    "id": "car",
+    "name": "Машина",
+    "price": 20000,
+    "image": "images/car.jpg",
+    "desc": "Немного не помещается в бюджет 😅"
+  },
+  {
+    "id": "egor",
+    "name": "Билет на Егора Крида",
+    "price": 30,
+    "image": "images/egor.jpg",
+    "desc": "Концертный вечер 🎤"
+  }
+]

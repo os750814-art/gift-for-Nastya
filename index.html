@@ -1,0 +1,228 @@
+﻿<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>8 марта</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="bg"></div>
+  <canvas id="petals"></canvas>
+
+  <!-- Auth Screen (fullscreen) -->
+  <div id="authScreen" class="auth-screen">
+    <div class="auth-inner">
+      <div class="auth-date">08 · 03</div>
+      <h1 class="auth-title">С праздником</h1>
+      <p class="auth-sub">Введи своё имя и код, чтобы открыть подарок</p>
+
+      <div class="auth-fields">
+        <div class="field-wrap">
+          <input id="authName" type="text" placeholder="Твоё имя" autocomplete="nickname" class="auth-input" />
+        </div>
+        <div class="field-wrap pin-wrap">
+          <input id="pin1" type="text" inputmode="numeric" maxlength="1" class="pin-digit" />
+          <input id="pin2" type="text" inputmode="numeric" maxlength="1" class="pin-digit" />
+          <input id="pin3" type="text" inputmode="numeric" maxlength="1" class="pin-digit" />
+          <input id="pin4" type="text" inputmode="numeric" maxlength="1" class="pin-digit" />
+        </div>
+        <div id="authError" class="auth-error"></div>
+        <button id="btnAuth" class="btn-main">Войти</button>
+        
+      </div>
+    </div>
+  </div>
+
+  <!-- Main App -->
+  <div id="appWrap" class="app-wrap hidden">
+
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-date">08.03</span>
+        <span class="brand-name" id="heroTitle">С праздником</span>
+      </div>
+      <div class="topbar-actions">
+        <button id="btnOpenCart" class="btn-icon cart-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+          <span id="cartBadge" class="cart-badge hidden">0</span>
+        </button>
+        <button id="btnReset" class="btn-icon" title="Сбросить">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12a9 9 0 109-9 9.75 9.75 0 00-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="wrap">
+
+      <!-- Budget section -->
+      <section class="budget-section" id="budgetSection">
+        <div class="budget-card" id="budgetCard">
+          <div class="budget-label">Твой бюджет</div>
+          <div class="budget-amount" id="budgetValue">—</div>
+          <div class="budget-bar-track"><div class="budget-bar-fill" id="budgetFill"></div></div>
+          <div class="budget-meta">
+            <span>Потрачено: <b id="spentValue">0р</b></span>
+            <span>Осталось: <b id="leftValue">—</b></span>
+          </div>
+        </div>
+        <button id="btnCheckoutTop" class="btn-checkout" disabled>Оформить заказ</button>
+      </section>
+
+      <!-- Gifts -->
+      <section class="shop-section">
+        <div class="section-head">
+          <h2 class="section-title">Выбери подарки</h2>
+          <div class="section-controls">
+            <div class="search-wrap">
+              <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input id="search" class="search-input" placeholder="Поиск…" />
+            </div>
+            <select id="sort" class="sort-select">
+              <option value="smart">По умолчанию</option>
+              <option value="cheap">Дешевле</option>
+              <option value="expensive">Дороже</option>
+            </select>
+          </div>
+        </div>
+        <div id="giftsGrid" class="gifts-grid"></div>
+      </section>
+    </main>
+
+    <!-- Cart Drawer -->
+    <div id="drawerOverlay" class="drawer-overlay"></div>
+    <aside class="drawer" id="drawer">
+      <div class="drawer-head">
+        <h3 class="drawer-title">Корзина</h3>
+        <button id="btnCloseDrawer" class="btn-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div id="cartList" class="cart-list"></div>
+      <div class="drawer-foot">
+        <div class="drawer-total">
+          <span>Итого</span>
+          <span id="totalValue" class="total-amount">0р</span>
+        </div>
+        <div class="drawer-actions">
+          <button id="btnClear" class="btn-ghost">Очистить</button>
+          <button id="btnCheckout" class="btn-main" disabled>Оформить</button>
+        </div>
+      </div>
+    </aside>
+
+  </div><!-- /appWrap -->
+
+  <!-- Budget Slot Modal -->
+  <div id="budgetModal" class="modal">
+    <div class="modal-card slot-card">
+      <div class="slot-header">
+        <div class="slot-eyebrow">Твой бюджет на сегодня</div>
+        <div class="slot-title">Крути барабан</div>
+      </div>
+
+      <div class="slot-machine">
+        <div class="slot-window">
+          <div class="slot-center-line"></div>
+          <div class="slot-track" id="slotTrack">
+            <div class="slot-num">?</div>
+          </div>
+        </div>
+        <div class="slot-handle-wrap">
+          <button id="btnRoll" class="slot-lever" aria-label="Крутить">
+            <span class="lever-top"></span>
+            <span class="lever-shaft"></span>
+            <span class="lever-ball"></span>
+          </button>
+        </div>
+      </div>
+
+      <div class="slot-sub" id="slotSub">Нажми на рычаг</div>
+
+    </div>
+  </div>
+
+  <!-- Gift Mystery Modal -->
+  <div id="giftOpenModal" class="modal">
+    <div class="modal-card mystery-card">
+      <div class="mystery-wrap" id="mysteryWrap">
+        <div class="mystery-box" id="mysteryBox">
+          <div class="mystery-lid"></div>
+          <div class="mystery-box-body">
+            <div class="mystery-question">?</div>
+            <div class="mystery-ribbon-h"></div>
+            <div class="mystery-ribbon-v"></div>
+          </div>
+          <div class="mystery-bow">
+            <div class="bow-left"></div>
+            <div class="bow-right"></div>
+            <div class="bow-center"></div>
+          </div>
+        </div>
+        <div class="mystery-reveal hidden" id="mysteryReveal">
+          <img id="mysteryImg" src="" alt="" />
+        </div>
+      </div>
+      <div class="mystery-name hidden" id="mysteryName"></div>
+      <div class="mystery-desc hidden" id="mysteryDesc"></div>
+      <div class="mystery-price hidden" id="mysteryPrice"></div>
+      <div class="mystery-actions">
+        <button id="btnGiftOpen" class="btn-main">Открыть</button>
+        <button id="btnGiftClose" class="btn-ghost">Закрыть</button>
+        <button id="btnGiftAdd" class="btn-main hidden">Добавить в корзину</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Checkout Modal -->
+  <div id="checkoutModal" class="modal">
+    <div class="modal-card checkout-card">
+      <button class="modal-close" id="btnCloseCheckout">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div class="checkout-title">Оформление заказа</div>
+      <div class="checkout-body">
+        <div class="checkout-receipt-wrap">
+          <div class="checkout-label">Чек</div>
+          <pre id="receiptBox" class="receipt"></pre>
+          <button id="btnCopy" class="btn-ghost small">Скопировать</button>
+        </div>
+        <div class="checkout-pay-wrap">
+          <div class="checkout-label">Детали оплаты</div>
+          <div class="pay-fields">
+            <input id="payName" type="text" placeholder="Имя на карте" class="pay-input" />
+            <input id="payCard" type="text" inputmode="numeric" placeholder="0000 0000 0000 0000" class="pay-input" />
+            <div class="pay-row">
+              <input id="payExp" type="text" inputmode="numeric" placeholder="MM/YY" class="pay-input" />
+              <input id="payCvv" type="password" inputmode="numeric" placeholder="CVV" class="pay-input" />
+            </div>
+          </div>
+          <p class="pay-note">Данные никуда не передаются — это форма для атмосферы.</p>
+          <div class="pay-actions">
+            <button id="btnPay" class="btn-main">Оплатить</button>
+            <button id="btnSkipPay" class="btn-ghost">Без оплаты</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Final Screen -->
+  <div id="finalScreen" class="modal">
+    <div class="modal-card final-card">
+      <div class="final-icon">✦</div>
+      <div class="final-title" id="finalTitle">Заказ оформлен ✦</div>
+      <div class="final-text" id="finalText">Доставим сегодня. С 8 марта.</div>
+      <button id="btnFinalOk" class="btn-main">Отлично</button>
+    </div>
+  </div>
+
+  <canvas id="confetti"></canvas>
+  <div id="toast" class="toast"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
