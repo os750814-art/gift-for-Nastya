@@ -1,4 +1,4 @@
-﻿/* =====================================================
+/* =====================================================
    8 марта — Gift Picker  v4
    ===================================================== */
 
@@ -12,10 +12,14 @@ var STORE_KEY    = "gift_site_v4";
 var GIFTS_DATA = [
   { id:"flowers",          name:"Букет",                       price:30, image:"", desc:"Красивый букет для тебя" },
   { id:"strawberry_choco", name:"Клубника в шоколаде",         price:20, image:"", desc:"Сладкая классика" },
-  { id:"ticket_sqwoz",     name:"Билет на Sqwoz Bab",          price:58, image:"", desc:"Концертный вечер со Sqwoz Bab" },
+  { id:"ticket_sqwoz",     name:"Билет на Sqwoz Bab",          price:58, image:"", desc:"Концертный вечер с Sqwoz Bab" },
   { id:"bag",              name:"Сумочка",                     price:10, image:"", desc:"Маленькая, стильная, удобная" },
   { id:"car",              name:"Машина",                      price:20000, image:"", desc:"Немного не помещается в бюджет" },
-  { id:"egor",             name:"Билет на Егора Крида",        price:30, image:"", desc:"Концертный вечер с Егором Кридом" }
+  { id:"egor",             name:"Билет на Егора Крида",        price:30, image:"", desc:"Концертный вечер с Егором Кридом" },
+  { id:"alkotour",         name:"Алкотур по Мичуринску",       price:5,  image:"", desc:"Незабываемое приключение по городу" },
+  { id:"nice_thing",       name:"Красивая вещичка",            price:35, image:"", desc:"Что-то милое и особенное" },
+  { id:"perfume",          name:"Духи",                        price:25, image:"", desc:"Аромат, который останется в памяти" },
+  { id:"love",             name:"Комплименты и любовь",        price:0,  image:"", desc:"Бесценно и всегда рядом" }
 ];
 
 var GIFT_EMOJI = {
@@ -24,7 +28,11 @@ var GIFT_EMOJI = {
   "ticket_sqwoz":     { emoji:"🎤", bg:"#fde8d8" },
   "bag":              { emoji:"👜", bg:"#fef3c7" },
   "car":              { emoji:"🚗", bg:"#dbeafe" },
-  "egor":             { emoji:"🎤", bg:"#ede9fe" }
+  "egor":             { emoji:"🎤", bg:"#ede9fe" },
+  "alkotour":         { emoji:"🍻", bg:"#fef9e7" },
+  "nice_thing":       { emoji:"✨", bg:"#fce4ec" },
+  "perfume":          { emoji:"🌸", bg:"#f3e5f5" },
+  "love":             { emoji:"❤️", bg:"#fce4ec" }
 };
 
 // ── HELPERS ─────────────────────────────────────────
