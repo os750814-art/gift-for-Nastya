@@ -18,7 +18,7 @@ var GIFTS_DATA = [
   { id:"egor",             name:"Билет на Егора Крида",        price:30, image:"", desc:"Концертный вечер с Егором Кридом" },
   { id:"alkotour",         name:"Алкотур по Мичуринску",       price:5,  image:"", desc:"Незабываемое приключение по городу" },
   { id:"nice_thing",       name:"Красивая вещичка",            price:35, image:"", desc:"Что-то милое и особенное" },
-  { id:"perfume",          name:"Духи",                        price:25, image:"", desc:"Аромат, который останется в памяти" },
+  { id:"perfume",          name:"Женская штучка из Золотого Яблока", price:25, image:"", desc:"Что-то особенное из любимого магазина" },
   { id:"love",             name:"Комплименты и любовь",        price:0,  image:"", desc:"Бесценно и всегда рядом" }
 ];
 
@@ -31,7 +31,7 @@ var GIFT_EMOJI = {
   "egor":             { emoji:"🎤", bg:"#ede9fe" },
   "alkotour":         { emoji:"🍻", bg:"#fef9e7" },
   "nice_thing":       { emoji:"✨", bg:"#fce4ec" },
-  "perfume":          { emoji:"🌸", bg:"#f3e5f5" },
+  "perfume":          { emoji:"🍎", bg:"#fce4ec" },
   "love":             { emoji:"❤️", bg:"#fce4ec" }
 };
 
